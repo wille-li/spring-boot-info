@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	
+	<property name="logback.logdir" value="/data/logs/spring-boot"/>
+	<!-- 设置控制台打印格式 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%date{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 设置文件打印格式 -->
+	<appender name="launchAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${logback.logdir}/%d{yyyy-MM-dd,aux}/launch-%d{yyyy-MM-dd-HH}.log
+			</fileNamePattern>
+			<maxHistory>720</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>
+				%date{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<root level="DEBUG">
+		<appender-ref ref="console" />
+		<appender-ref ref="launchAppender"/>
+	</root>
+	
+	<!-- 隐藏Spring 日志 -->
+	<logger name="org.springframework" level="ERROR">
+	</logger>
+	
+</configuration>
